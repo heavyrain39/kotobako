@@ -1,0 +1,534 @@
+/* ==========================================================================
+   1. 기본 설정 (폰트, 변수, 리셋)
+   ========================================================================== */
+
+/* --- 폰트 불러오기 --- */
+@font-face {
+    font-family: 'Pretendard Variable';
+    src: url('fonts/PretendardVariable.woff2') format('woff2-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Paperlogy';
+    src: url('fonts/Paperlogy-4Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* --- CSS 변수 --- */
+:root {
+    /* 테마 공통 설정 */
+    --font-heading: 'Paperlogy', sans-serif;
+    --font-body: 'Pretendard Variable', sans-serif;
+    --transition-speed: 0.2s;
+    --transition-speed-fast: 0.15s;
+    --container-width: 1100px;
+    --border-radius: 8px;
+    --border-radius-pill: 20px;
+    --border-radius-card: 12px;
+}
+
+body[data-theme="aetherial-light"] {
+    --color-background: #F8F9FA;
+    --color-surface: #FFFFFF;
+    --color-text-primary: #343A40;
+    --color-text-secondary: #6C757D;
+    --color-border: #CED4DA;
+    --color-accent: #A0D2DB;
+    --color-accent-darker: #7EACB3;
+    --color-button-active-bg: #e9ecef;
+    --color-accent-active: #48a2b0;
+}
+
+body[data-theme="nordic-noir"] {
+    --color-background: #2E3440;
+    --color-surface: #3B4252;
+    --color-text-primary: #ECEFF4;
+    --color-text-secondary: #D8DEE9;
+    --color-border: #4C566A;
+    --color-accent: #88C0D0;
+    --color-accent-darker: #70A9BF;
+    --color-button-active-bg: #292E39;
+    --color-accent-active: #b4dce8;
+}
+
+
+/* --- 글로벌 리셋 & 기본 스타일 --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    line-height: 1.7;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    width: 100%;
+    max-width: var(--container-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1.5rem;
+}
+
+a {
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: color var(--transition-speed);
+}
+
+a:hover {
+    color: var(--color-accent-darker);
+}
+
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+}
+
+/* ==========================================================================
+   2. 레이아웃 (헤더, 메인, 푸터)
+   ========================================================================== */
+
+#main-header {
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    padding: 0.8rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background-color var(--transition-speed), border-color var(--transition-speed);
+}
+
+#main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-center {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+#main-nav {
+    min-width: 130px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+main {
+    padding: 1rem 0;
+    flex: 1;
+    display: flex;
+}
+main > .container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+}
+
+footer {
+    background-color: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    padding: 1rem 0;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    transition: background-color var(--transition-speed), border-color var(--transition-speed);
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer .copyright a {
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+footer .copyright a:hover {
+    color: var(--color-accent);
+}
+
+/* ==========================================================================
+   3. 컴포넌트 (로고, 네비게이션, 셀렉터 등)
+   ========================================================================== */
+
+.logo a {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    min-width: 130px;
+}
+
+.level-options {
+    position: relative;
+    display: flex;
+    background-color: var(--color-button-active-bg);
+    border-radius: var(--border-radius-pill);
+    padding: 0.2rem;
+    transition: background-color var(--transition-speed);
+}
+
+.level-options input[type="checkbox"] {
+    display: none;
+}
+
+.level-options label {
+    font-size: 0.9rem;
+    padding: 0.2rem 0.8rem;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    border-radius: var(--border-radius-pill);
+    transition: color var(--transition-speed-fast);
+    z-index: 2;
+}
+.level-options label:hover {
+    color: var(--color-text-primary);
+}
+
+.level-options input[type="checkbox"]:checked + label {
+    color: var(--color-text-primary);
+}
+
+.selection-highlighter-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.selection-highlighter {
+    position: absolute;
+    top: 0.2rem;
+    height: calc(100% - 0.4rem);
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-pill);
+    pointer-events: none;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                opacity 0.2s ease-out;
+}
+
+.selection-highlighter.is-entering {
+    transform: scale(0.85);
+}
+
+.selection-highlighter.is-leaving {
+    transform: scale(0.85);
+    opacity: 0;
+}
+
+.theme-selector {
+    display: flex;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    background-color: var(--color-background);
+    transition: background-color var(--transition-speed), border-color var(--transition-speed);
+}
+
+.theme-btn {
+    height: 38px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 15px;
+    transition: background-color 0.2s;
+}
+
+.theme-btn:first-child { 
+    border-right: 1px solid var(--color-border); 
+    transition: border-color var(--transition-speed);
+}
+
+.theme-btn.active { 
+    background-color: var(--color-button-active-bg); 
+}
+
+.theme-btn .color-patch {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+    transition: background-color var(--transition-speed), border-color var(--transition-speed);
+}
+
+.theme-btn[data-theme="aetherial-light"] .color-patch {
+    background-color: #F8F9FA;
+}
+
+.theme-btn[data-theme="nordic-noir"] .color-patch {
+    background-color: #2E3440;
+}
+
+/* ==========================================================================
+   4. 홈 화면 (메뉴 그리드)
+   ========================================================================== */
+
+#home-section {
+    display: block;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.menu-tile {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-card);
+    padding: 2rem;
+    text-align: center;
+    color: var(--color-text-primary);
+    transition: all var(--transition-speed-fast);
+}
+
+.menu-tile:hover {
+    border-color: var(--color-accent);
+    background-color: var(--color-button-active-bg);
+}
+
+.menu-tile .tile-icon {
+    margin-bottom: 1rem;
+    height: 48px; /* 아이콘 높이 고정 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* [수정] SVG 아이콘 스타일 */
+.tile-icon svg {
+    width: 48px;
+    height: 48px;
+    /* color는 부모(.menu-tile)의 color를 상속받으므로 별도 지정 불필요 */
+}
+
+
+.menu-tile .tile-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.menu-tile .tile-description {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+.menu-tile.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--color-button-active-bg);
+}
+
+.menu-tile.disabled:hover {
+    border-color: var(--color-border);
+    background-color: var(--color-button-active-bg);
+}
+
+
+/* ==========================================================================
+   5. 플래시카드 & 컨트롤
+   ========================================================================== */
+
+#study-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.study-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+#flashcard-container {
+    width: 100%;
+    max-width: 700px;
+    perspective: 1500px;
+}
+
+.flashcard {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    aspect-ratio: 2 / 1;
+    position: relative;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.flashcard-inner.is-flipped {
+    transform: rotateY(180deg);
+}
+
+.flashcard-front, .flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-card);
+    padding: 2.5rem;
+    transition: background-color var(--transition-speed), border-color var(--transition-speed);
+}
+
+.flashcard-back {
+    transform: rotateY(180deg);
+}
+
+.flashcard-word {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.flashcard-word.no-furigana {
+    line-height: 1;
+}
+
+.flashcard-word ruby {
+    ruby-align: center;
+}
+
+.flashcard-word rt {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+}
+
+.flashcard-meaning {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+.flashcard-message {
+    text-align: center;
+    color: var(--color-text-secondary);
+    padding: 4rem;
+}
+
+.control-btn {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all var(--transition-speed-fast);
+}
+
+.control-btn:hover {
+    background-color: var(--color-button-active-bg);
+    color: var(--color-text-primary);
+}
+
+.control-btn:active {
+    transform: scale(0.95);
+}
+
+.nav-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.study-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 700px;
+    margin: 1.5rem auto 0;
+    width: 100%;
+}
+
+.shortcut-guide {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    opacity: 0.7;
+}
+
+.shortcut-guide kbd {
+    font-family: var(--font-body);
+    background-color: var(--color-button-active-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    font-size: 0.8rem;
+}
+
+.study-options {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.option-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--border-radius);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.option-btn.active {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent-darker);
+    color: var(--color-surface);
+}
+.option-btn.active:hover {
+    background-color: var(--color-accent-darker);
+    color: var(--color-surface);
+}
