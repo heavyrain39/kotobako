@@ -90,11 +90,14 @@
                             <div class="difficulty-options">
                                 <div class="difficulty-highlighter-container"></div>
                                 <input type="radio" id="diff-easy" name="difficulty" value="easy">
-                                <label for="diff-easy">쉬움</label>
+                                <!-- [수정] '쉬움' 버튼에 툴팁 추가 -->
+                                <label for="diff-easy" title="단어의 출현 빈도가 낮아집니다.">쉬움</label>
                                 <input type="radio" id="diff-normal" name="difficulty" value="normal" checked>
-                                <label for="diff-normal">보통</label>
+                                <!-- [수정] '보통' 버튼에 툴팁 추가 -->
+                                <label for="diff-normal" title="단어의 출현 빈도를 보통으로 설정합니다.">보통</label>
                                 <input type="radio" id="diff-hard" name="difficulty" value="hard">
-                                <label for="diff-hard">어려움</label>
+                                <!-- [수정] '어려움' 버튼에 툴팁 추가 -->
+                                <label for="diff-hard" title="단어의 출현 빈도가 높아집니다.">어려움</label>
                             </div>
                         </div>
                         <div id="flashcard-container">
@@ -146,7 +149,6 @@
                         <p id="total-quizzes-played">0개</p>
                     </div>
                 </div>
-                <!-- [추가] 차트가 그려질 영역 -->
                 <div class="chart-container">
                     <canvas id="cards-viewed-chart"></canvas>
                 </div>
@@ -167,7 +169,6 @@
     </footer>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <!-- [추가] Chart.js 라이브러리 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="js/main.js"></script>
 
