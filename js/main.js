@@ -1,27 +1,32 @@
 // js/main.js
 
-// 다른 모듈에서 필요한 함수와 변수들을 import 합니다.
 import { loadSettings, saveSettings, userSettings } from './settings.js';
 import { loadAllWordData } from './data.js';
+import { loadProgress } from './progress.js';
+import { loadStats } from './stats.js';
 import { setAllWords, showNextWord, showPrevWord, flipCard, updateStudySession } from './flashcard.js';
 import { 
     showSection, 
     initializeTheme, 
     updateSelectionHighlighter, 
+    updateDifficultyHighlighter,
     setFooterYear,
     applySettingsToUI,
-    initializeStudyControls
+    initializeStudyControls,
+    updateGreeting,
+    initializeStatsPage,
+    currentSectionId
 } from './ui.js';
 
-// 앱 전체를 초기화하고 실행하는 메인 함수
 async function initializeApp() {
-    // 1. 기본 UI 및 설정 초기화
     setFooterYear();
     initializeTheme();
     loadSettings();
+    loadProgress();
+    loadStats();
     applySettingsToUI();
-
-    // 2. 단어 데이터를 비동기적으로 불러와 flashcard 모듈에 설정
+    updateGreeting();
+    
     const flashcardContainer = document.getElementById('flashcard-container');
     flashcardContainer.innerHTML = `<div class="flashcard-message">단어 데이터를 불러오는 중입니다...</div>`;
     const allWords = await loadAllWordData();
@@ -30,7 +35,6 @@ async function initializeApp() {
         flashcardContainer.innerHTML = `<div class="flashcard-message">단어 데이터를 불러오는 데 실패했습니다. 콘솔을 확인해주세요.</div>`;
     }
 
-    // 3. 네비게이션 및 컨트롤 이벤트 리스너 설정
     const logoLink = document.getElementById('logo-link');
     const menuTiles = document.querySelectorAll('.menu-tile:not(.disabled)');
     
@@ -43,24 +47,26 @@ async function initializeApp() {
         tile.addEventListener('click', (e) => {
             e.preventDefault();
             const targetSectionId = tile.dataset.section;
-            // '단어 공부' 타일을 클릭했을 때만 학습 세션을 시작
+
+            showSection(targetSectionId);
+
             if (targetSectionId === 'study-section') {
                 updateStudySession(true);
+                requestAnimationFrame(updateDifficultyHighlighter);
             }
-            showSection(targetSectionId);
+            if (targetSectionId === 'stats-section') {
+                initializeStatsPage();
+            }
         });
     });
 
-    // 플래시카드 좌/우 이동 버튼
     document.getElementById('next-word-btn').addEventListener('click', showNextWord);
     document.getElementById('prev-word-btn').addEventListener('click', showPrevWord);
     
-    // 학습 옵션(후리가나, 섞기, 자동재생) 버튼
     initializeStudyControls();
 
-    // 키보드 단축키
     document.addEventListener('keydown', (e) => {
-        if (document.getElementById('study-section').style.display !== 'block') return;
+        if (currentSectionId !== 'study-section') return;
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
         switch (e.key) {
@@ -70,12 +76,23 @@ async function initializeApp() {
         }
     });
     
-    // 창 크기 변경 시 레벨 선택기 하이라이터 업데이트
-    window.addEventListener('resize', updateSelectionHighlighter);
+    window.addEventListener('resize', () => {
+        updateSelectionHighlighter();
+        if (currentSectionId === 'study-section') {
+            updateDifficultyHighlighter();
+        }
+    });
 
-    // 4. 초기 화면 표시
-    showSection('home-section');
+    // [수정] 마지막으로 본 섹션을 불러오거나, 없으면 홈 섹션을 보여줌
+    const lastSection = localStorage.getItem('kotobako-last-section') || 'home-section';
+    showSection(lastSection);
+    // [추가] 마지막 섹션에 따라 필요한 초기화 함수 호출
+    if (lastSection === 'study-section') {
+        updateStudySession(true);
+        requestAnimationFrame(updateDifficultyHighlighter);
+    } else if (lastSection === 'stats-section') {
+        initializeStatsPage();
+    }
 }
 
-// DOM이 모두 로드되면 앱 실행
 document.addEventListener('DOMContentLoaded', initializeApp);

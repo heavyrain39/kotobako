@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kotobako</title>
     <meta name="description" content="서버리스(Serverless) 기반의 개인 맞춤형 일본어 단어 학습 웹 애플리케이션">
+    <link rel="icon" type="image/png" href="ico.png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body data-theme="aetherial-light"> <!-- 기본 테마 설정 -->
@@ -13,7 +14,6 @@
     <header id="main-header">
         <div class="container">
             <div class="logo">
-                <!-- [수정] 로고 클릭 시 홈으로 이동 -->
                 <a href="#" id="logo-link">Kotobako</a>
             </div>
             <div class="header-center">
@@ -33,7 +33,6 @@
                     </div>
                 </div>
             </div>
-            <!-- [삭제] 기존 탭 네비게이션 삭제 -->
             <nav id="main-nav">
             </nav>
         </div>
@@ -42,65 +41,68 @@
     <!-- ====== Main Content ====== -->
     <main>
         <div class="container">
-            <!-- [추가] 초기화면 섹션 -->
+            <!-- 초기화면 섹션 -->
             <section id="home-section" class="content-section">
+                <h2 id="greeting" class="home-greeting"></h2>
                 <div class="menu-grid">
-                    <!-- 단어 공부 타일 -->
                     <a href="#" class="menu-tile" data-section="study-section">
-                        <div class="tile-icon">
-                            <!-- [수정] 보내주신 '새싹' 아이콘으로 교체 -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9.536V7a4 4 0 0 1 4-4h1.5a.5.5 0 0 1 .5.5V5a4 4 0 0 1-4 4 4 4 0 0 0-4 4c0 2 1 3 1 5a5 5 0 0 1-1 3"/><path d="M4 9a5 5 0 0 1 8 4 5 5 0 0 1-8-4"/><path d="M5 21h14"/></svg>
-                        </div>
+                        <div class="tile-icon"><svg><use href="icons.svg#icon-sprout"></use></svg></div>
                         <h3 class="tile-title">단어 공부</h3>
                         <p class="tile-description">플래시카드로 단어를 외웁니다.</p>
                     </a>
-                    <!-- 단어장 타일 (비활성화) -->
                     <a href="#" class="menu-tile disabled" data-section="wordbook-section">
-                        <div class="tile-icon">
-                            <!-- [수정] 보내주신 '북마크' 아이콘으로 교체 -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2Z"/><path d="m9 10 2 2 4-4"/></svg>
-                        </div>
+                        <div class="tile-icon"><svg><use href="icons.svg#icon-bookmark-check"></use></svg></div>
                         <h3 class="tile-title">내 단어장</h3>
                         <p class="tile-description">나만의 단어장을 관리합니다. (준비중)</p>
                     </a>
-                    <!-- 퀴즈 타일 (비활성화) -->
                     <a href="#" class="menu-tile disabled" data-section="quiz-section">
-                        <div class="tile-icon">
-                            <!-- [수정] 보내주신 '메달' 아이콘으로 교체 -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/></svg>
-                        </div>
+                        <div class="tile-icon"><svg><use href="icons.svg#icon-medal"></use></svg></div>
                         <h3 class="tile-title">퀴즈</h3>
                         <p class="tile-description">퀴즈로 실력을 시험해 보세요. (준비중)</p>
                     </a>
-                    <!-- 가나 공부 타일 (비활성화) -->
                     <a href="#" class="menu-tile disabled" data-section="kana-section">
-                        <div class="tile-icon">
-                            <!-- [수정] 보내주신 '알파벳' 아이콘으로 교체 -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 16 4.039-9.69a.5.5 0 0 1 .923 0L11 16"/><path d="M22 9v7"/><path d="M3.304 13h6.392"/><circle cx="18.5" cy="12.5" r="3.5"/></svg>
-                        </div>
+                        <div class="tile-icon"><svg><use href="icons.svg#icon-case-sensitive"></use></svg></div>
                         <h3 class="tile-title">가나 공부</h3>
                         <p class="tile-description">히라가나/가타카나를 외웁니다. (준비중)</p>
+                    </a>
+                    <a href="#" class="menu-tile" data-section="stats-section">
+                        <div class="tile-icon"><svg><use href="icons.svg#icon-chart-line"></use></svg></div>
+                        <h3 class="tile-title">통계</h3>
+                        <p class="tile-description">일별 학습 기록을 확인합니다.</p>
+                    </a>
+                    <a href="#" class="menu-tile disabled" data-section="about-section">
+                        <div class="tile-icon"><svg><use href="icons.svg#icon-message-more"></use></svg></div>
+                        <h3 class="tile-title">About</h3>
+                        <p class="tile-description">Kotobako를 소개합니다.</p>
                     </a>
                 </div>
             </section>
 
-            <!-- 학습 섹션 (플래시카드) - [수정] 기본적으로 숨겨짐 -->
+            <!-- 학습 섹션 (플래시카드) -->
             <section id="study-section" class="content-section" style="display: none;">
                 <div class="study-area">
                     <button id="prev-word-btn" class="control-btn nav-btn" title="이전 단어 (←)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                        </svg>
+                        <svg width="24" height="24"><use href="icons.svg#icon-arrow-left"></use></svg>
                     </button>
-                    
-                    <div id="flashcard-container">
-                        <div class="flashcard-message">단어 데이터를 불러오는 중입니다...</div>
+                    <div class="study-main">
+                        <div class="word-level-indicator"></div>
+                        <div class="difficulty-selector">
+                            <div class="difficulty-options">
+                                <div class="difficulty-highlighter-container"></div>
+                                <input type="radio" id="diff-easy" name="difficulty" value="easy">
+                                <label for="diff-easy">쉬움</label>
+                                <input type="radio" id="diff-normal" name="difficulty" value="normal" checked>
+                                <label for="diff-normal">보통</label>
+                                <input type="radio" id="diff-hard" name="difficulty" value="hard">
+                                <label for="diff-hard">어려움</label>
+                            </div>
+                        </div>
+                        <div id="flashcard-container">
+                            <div class="flashcard-message">단어 데이터를 불러오는 중입니다...</div>
+                        </div>
                     </div>
-
                     <button id="next-word-btn" class="control-btn nav-btn" title="다음 단어 (→)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                        </svg>
+                        <svg width="24" height="24"><use href="icons.svg#icon-arrow-right"></use></svg>
                     </button>
                 </div>
                 <div class="study-controls">
@@ -108,34 +110,48 @@
                         <kbd>←</kbd> <kbd>→</kbd> 이동　 <kbd>Space</kbd> 뒤집기
                     </div>
                     <div class="study-options">
-                        <button id="furigana-btn" class="control-btn option-btn" title="후리가나 켜기/끄기">
-                            ふ
-                        </button>
-                        <button id="shuffle-btn" class="control-btn option-btn" title="랜덤 섞기">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-shuffle" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M0 3.5A.5.5 0 0 1 .5 3H1c2.202 0 3.827 1.24 4.874 2.418.49.552.865 1.102 1.126 1.532.26-.43.636-.98 1.126-1.532C9.173 4.24 10.798 3 13 3v1c-1.798 0-3.173 1.01-4.126 2.082A9.6 9.6 0 0 0 7.556 8a9.6 9.6 0 0 0 1.317 1.918C9.828 10.99 11.204 12 13 12v1c-2.202 0-3.827-1.24-4.874-2.418A10.6 10.6 0 0 1 7 9.05c-.26.43-.636.98-1.126 1.532C4.827 11.76 3.202 13 1 13H.5a.5.5 0 0 1 0-1H1c1.798 0 3.173-1.01 4.126-2.082A9.6 9.6 0 0 0 6.444 8a9.6 9.6 0 0 0-1.317-1.918C4.172 5.01 2.796 4 1 4H.5a.5.5 0 0 1-.5-.5"/>
-                                <path d="M13 5.466V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192m0 9v-3.932a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192"/>
-                            </svg>
+                        <button id="furigana-btn" class="control-btn option-btn" title="후리가나 켜기/끄기">ふ</button>
+                        <button id="shuffle-btn" class="control-btn option-btn" title="지능형 랜덤 (난이도 가중치 적용)">
+                            <svg width="20" height="20"><use href="icons.svg#icon-shuffle"></use></svg>
                         </button>
                         <button id="autospeak-btn" class="control-btn option-btn" title="자동 재생">
-                            <svg class="icon-on" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M11.536 14.01A8.47 8.47 0 0 0 14.026 8a8.47 8.47 0 0 0-2.49-6.01l-.708.707A7.48 7.48 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303z"/>
-                                <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.48 5.48 0 0 1 11.025 8a5.48 5.48 0 0 1-1.61 3.89z"/>
-                                <path d="M8.707 11.182A4.5 4.5 0 0 0 10.025 8a4.5 4.5 0 0 0-1.318-3.182L8 5.525A3.5 3.5 0 0 1 9.025 8 3.5 3.5 0 0 1 8 10.475zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06"/>
-                            </svg>
-                            <svg class="icon-off" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16" style="display: none;">
-                                <path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zm7.137 2.096a.5.5 0 0 1 0 .708L12.207 8l1.647 1.646a.5.5 0 0 1-.708.708L11.5 8.707l-1.646 1.647a.5.5 0 0 1-.708-.708L10.793 8 9.146 6.354a.5.5 0 0 1 .708-.708L11.5 7.293l1.646-1.647a.5.5 0 0 1 .708 0z"/>
-                            </svg>
+                            <svg class="icon-on" width="20" height="20"><use href="icons.svg#icon-volume-on"></use></svg>
+                            <svg class="icon-off" width="20" height="20" style="display: none;"><use href="icons.svg#icon-volume-off"></use></svg>
                         </button>
                     </div>
                 </div>
             </section>
             
-            <!-- [추가] 향후 기능을 위한 빈 섹션들 -->
             <section id="wordbook-section" class="content-section" style="display: none;"></section>
             <section id="quiz-section" class="content-section" style="display: none;"></section>
             <section id="kana-section" class="content-section" style="display: none;"></section>
-            
+            <section id="stats-section" class="content-section" style="display: none;">
+                <div class="stats-header">
+                    <h2 id="stats-greeting"></h2>
+                    <button id="change-name-btn" class="text-btn">이름 변경</button>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>총 학습일</h4>
+                        <p id="total-study-days">0일</p>
+                        <p id="consecutive-days-detail" class="stat-detail"></p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>본 카드 수</h4>
+                        <p id="total-cards-viewed">0개</p>
+                        <p id="today-cards-viewed-detail" class="stat-detail"></p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>푼 퀴즈 수</h4>
+                        <p id="total-quizzes-played">0개</p>
+                    </div>
+                </div>
+                <!-- [추가] 차트가 그려질 영역 -->
+                <div class="chart-container">
+                    <canvas id="cards-viewed-chart"></canvas>
+                </div>
+            </section>
+            <section id="about-section" class="content-section" style="display: none;"></section>
         </div>
     </main>
 
@@ -144,19 +160,15 @@
         <div class="container">
             <p class="copyright">© <span id="current-year">2024</span> <a href="https://heavyrain39.github.io/portfolio/" target="\_blank">야차완</a>. All Rights Reserved.</p>
             <div class="theme-selector">
-                <button class="theme-btn" data-theme="aetherial-light" title="Light Theme">
-                    <div class="color-patch"></div>
-                </button>
-                <button class="theme-btn" data-theme="nordic-noir" title="Dark Theme">
-                    <div class="color-patch"></div>
-                </button>
+                <button class="theme-btn" data-theme="aetherial-light" title="Light Theme"><div class="color-patch"></div></button>
+                <button class="theme-btn" data-theme="nordic-noir" title="Dark Theme"><div class="color-patch"></div></button>
             </div>
         </div>
     </footer>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    
-    <!-- [수정] type="module"을 추가하고, src 경로를 main.js로 변경 -->
+    <!-- [추가] Chart.js 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="js/main.js"></script>
 
 </body>

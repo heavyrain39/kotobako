@@ -303,7 +303,8 @@ footer .copyright a:hover {
 
 .menu-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    /* [수정] 3열 그리드로 고정하여 레이아웃 안정성 확보 */
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
 }
 
@@ -324,19 +325,20 @@ footer .copyright a:hover {
 
 .menu-tile .tile-icon {
     margin-bottom: 1rem;
-    height: 48px; /* 아이콘 높이 고정 */
+    height: 48px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* [수정] SVG 아이콘 스타일 */
 .tile-icon svg {
     width: 48px;
     height: 48px;
-    /* color는 부모(.menu-tile)의 color를 상속받으므로 별도 지정 불필요 */
+    /* [수정] 홈 화면 아이콘들이 선으로 그려지도록 스타일을 명시적으로 지정 */
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.5; 
 }
-
 
 .menu-tile .tile-title {
     font-size: 1.5rem;
@@ -360,7 +362,6 @@ footer .copyright a:hover {
     background-color: var(--color-button-active-bg);
 }
 
-
 /* ==========================================================================
    5. 플래시카드 & 컨트롤
    ========================================================================== */
@@ -378,9 +379,26 @@ footer .copyright a:hover {
     gap: 1.5rem;
 }
 
-#flashcard-container {
+.study-main {
+    position: relative;
     width: 100%;
     max-width: 700px;
+}
+
+/* [추가] 단어 레벨 표시자 스타일 */
+.word-level-indicator {
+    position: absolute;
+    top: -3.5rem;
+    left: 0;
+    z-index: 10;
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--color-text-secondary);
+    opacity: 0.8;
+}
+
+#flashcard-container {
+    width: 100%;
     perspective: 1500px;
 }
 
@@ -393,7 +411,6 @@ footer .copyright a:hover {
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
 }
-
 .flashcard-inner {
     position: relative;
     width: 100%;
@@ -404,7 +421,6 @@ footer .copyright a:hover {
 .flashcard-inner.is-flipped {
     transform: rotateY(180deg);
 }
-
 .flashcard-front, .flashcard-back {
     position: absolute;
     width: 100%;
@@ -420,45 +436,37 @@ footer .copyright a:hover {
     padding: 2.5rem;
     transition: background-color var(--transition-speed), border-color var(--transition-speed);
 }
-
 .flashcard-back {
     transform: rotateY(180deg);
 }
-
 .flashcard-word {
     font-size: 4rem;
     font-weight: 700;
     line-height: 1.2;
     text-align: center;
 }
-
 .flashcard-word.no-furigana {
     line-height: 1;
 }
-
 .flashcard-word ruby {
     ruby-align: center;
 }
-
 .flashcard-word rt {
     font-size: 1.25rem;
     font-weight: 500;
     color: var(--color-text-secondary);
 }
-
 .flashcard-meaning {
     font-family: var(--font-heading);
     font-size: 2.2rem;
     font-weight: 400;
     line-height: 1.4;
 }
-
 .flashcard-message {
     text-align: center;
     color: var(--color-text-secondary);
     padding: 4rem;
 }
-
 .control-btn {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
@@ -469,23 +477,74 @@ footer .copyright a:hover {
     align-items: center;
     transition: all var(--transition-speed-fast);
 }
-
 .control-btn:hover {
     background-color: var(--color-button-active-bg);
     color: var(--color-text-primary);
 }
-
 .control-btn:active {
     transform: scale(0.95);
 }
-
 .nav-btn {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     flex-shrink: 0;
 }
-
+.nav-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+}
+.difficulty-selector {
+    position: absolute;
+    top: -3.5rem;
+    right: 0;
+    z-index: 10;
+}
+.difficulty-options {
+    position: relative;
+    display: flex;
+    background-color: var(--color-button-active-bg);
+    border-radius: var(--border-radius-pill);
+    padding: 0.2rem;
+    transition: background-color var(--transition-speed);
+}
+.difficulty-options input[type="radio"] {
+    display: none;
+}
+.difficulty-options label {
+    font-size: 0.85rem;
+    padding: 0.3rem 1rem;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    border-radius: var(--border-radius-pill);
+    transition: color var(--transition-speed-fast);
+    z-index: 2;
+}
+.difficulty-options label:hover {
+    color: var(--color-text-primary);
+}
+.difficulty-options input[type="radio"]:checked + label {
+    color: var(--color-text-primary);
+}
+.difficulty-highlighter-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.difficulty-highlighter {
+    position: absolute;
+    top: 0.2rem;
+    height: calc(100% - 0.4rem);
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-pill);
+    pointer-events: none;
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 .study-controls {
     display: flex;
     justify-content: space-between;
@@ -494,13 +553,11 @@ footer .copyright a:hover {
     margin: 1.5rem auto 0;
     width: 100%;
 }
-
 .shortcut-guide {
     font-size: 0.85rem;
     color: var(--color-text-secondary);
     opacity: 0.7;
 }
-
 .shortcut-guide kbd {
     font-family: var(--font-body);
     background-color: var(--color-button-active-bg);
@@ -509,12 +566,10 @@ footer .copyright a:hover {
     padding: 0.1rem 0.4rem;
     font-size: 0.8rem;
 }
-
 .study-options {
     display: flex;
     gap: 0.75rem;
 }
-
 .option-btn {
     width: 44px;
     height: 44px;
@@ -522,7 +577,11 @@ footer .copyright a:hover {
     font-size: 1.2rem;
     font-weight: 600;
 }
-
+.option-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
 .option-btn.active {
     background-color: var(--color-accent);
     border-color: var(--color-accent-darker);
@@ -531,4 +590,88 @@ footer .copyright a:hover {
 .option-btn.active:hover {
     background-color: var(--color-accent-darker);
     color: var(--color-surface);
+}
+
+/* ==========================================================================
+   6. 홈 & 통계 추가 스타일
+   ========================================================================== */
+
+.home-greeting {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    color: var(--color-text-secondary);
+}
+
+.stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.text-btn {
+    background-color: transparent;
+    border: none;
+    color: var(--color-accent);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    transition: all var(--transition-speed-fast);
+}
+.text-btn:hover {
+    background-color: var(--color-button-active-bg);
+    color: var(--color-accent-darker);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-card);
+    padding: 1.5rem;
+}
+
+.stat-card h4 {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: var(--color-text-primary);
+    line-height: 1.2;
+}
+
+.stat-card .stat-detail {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin-top: 0.5rem;
+    line-height: 1.4;
+    height: 1.4em; /* 상세 설명이 없을 때도 레이아웃이 밀리지 않도록 높이 고정 */
+}
+
+.chart-container {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-card);
+    padding: 1.5rem;
+    height: 300px; /* 차트의 높이 지정 */
+    position: relative;
 }
