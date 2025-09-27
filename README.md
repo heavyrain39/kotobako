@@ -22,7 +22,7 @@ Kotobako는 과학적인 **간격 반복 학습(Spaced Repetition System)** 알�
 
 <br>
 
-## 🛠️ 주요 기술 스택 (Tech Stack)
+## 🛠️ 기술 스택
 
 -   **Frontend:** HTML, CSS, Vanilla JavaScript (ES6+)
 -   **Animation:** GSAP
